@@ -1,0 +1,100 @@
+﻿menu{margin:0;padding:0;}
+header,footer,section,article,aside,nav,hgroup,address,figure,figcaption,menu,details{display:block;}
+#operlist_div_menu li {
+    list-style: none;
+}
+.circular {
+    /*position:fixed;top:200px;left:500px;*/
+    position: fixed;
+    top: 40%;
+    left: 40%;
+}
+/* 下拉式菜单-默认左对齐 */
+.u-menu{display:none;position:absolute;z-index:100;top:100%;left:0;margin:1px 0 0;border:1px solid #d0d0d0;border-radius:5px;line-height:1.5;font-size:12px;letter-spacing:normal;word-spacing:normal;box-shadow:0 5px 15px rgba(0,0,0,0.05);background:#fff;}
+.u-menu li a{display:block;padding:6px 12px;border-top:1px solid #e8e8e8;overflow:hidden;word-wrap:normal;white-space:nowrap;text-overflow:ellipsis;color:#333;}
+.u-menu li:first-child a{border:0;border-radius:5px 5px 0 0;}
+.u-menu li:last-child a{border-radius:0 0 5px 5px;}
+.u-menu li a:hover{color:#333;background:#f7f7f7;}
+.u-menu li a:active{background:#f0f0f0;}
+/* 显示 */
+.u-menu.z-show{display:block;}
+/* 分组 */
+.u-menu-gp li:empty{border-top:1px solid #ddd;margin:5px 0;}
+.u-menu-gp li a{border:0;}
+/* 宽度限制 */
+.u-menu-min,.u-menu-max{-webkit-box-sizing:border-box;-moz-box-sizing:border-box;box-sizing:border-box;}
+/*.u-menu-min{min-width:100%;}*/
+.u-menu-max{max-width:100%;}
+/* 右对齐 */
+.u-menu-rt{left:auto;right:0;}
+
+fieldset {
+padding-bottom:3px;
+    border: none;
+    border-top: 1px solid #eee
+}
+
+    fieldset legend {
+         margin-left: 20px;
+        padding: 5px 10px;
+        color: #666;
+        font-weight: 600
+    }
+
+
+.l-btn:hover {
+    background: #e2e2e2;
+    color: #000;
+    filter: none
+}
+.am-tabs-nav li {
+    position: relative;
+    z-index: 1;
+}
+
+.am-tabs-nav .am-icon-close {
+    position: absolute;
+    top: 0;
+    right: 10px;
+    color: #888;
+    cursor: pointer;
+    z-index: 100;
+}
+.am-tabs .am-tabs-bd {
+position:inherit;
+height:100%;
+}
+.am-form-label {
+    margin:0px;
+    top:10px;
+}
+
+.am-tabs-nav .am-icon-close:hover {
+    color: #333;
+}
+
+    .am-tabs-nav .am-icon-close ~ a {
+        padding-right: 25px !important;
+    }
+
+
+
+.am-form-inline select[class=am-form-field] {
+    top: 5px;
+    right: -2px;
+    position: relative;
+}
+.am-form-inline .am-input-group > .am-form-field {
+    width: auto;
+    margin-left: 2px;
+}
+
+.am-form .am-selected-btn[disable] {
+    opacity: inherit;
+    background-color: #eeeeee;
+}
+.am-form input[type=number][disabled], .am-form input[type=number][readonly], .am-form input[type=search][disabled], .am-form input[type=search][readonly], .am-form input[type=text][disabled], .am-form input[type=text][readonly], .am-form input[type=password][disabled], .am-form input[type=password][readonly], .am-form input[type=datetime][disabled], .am-form input[type=datetime][readonly], .am-form input[type=datetime-local][disabled], .am-form input[type=datetime-local][readonly], .am-form input[type=date][disabled], .am-form input[type=date][readonly], .am-form input[type=month][disabled], .am-form input[type=month][readonly], .am-form input[type=time][disabled], .am-form input[type=time][readonly], .am-form input[type=week][disabled], .am-form input[type=week][readonly], .am-form input[type=email][disabled], .am-form input[type=email][readonly], .am-form input[type=url][disabled], .am-form input[type=url][readonly], .am-form input[type=tel][disabled], .am-form input[type=tel][readonly], .am-form input[type=color][disabled], .am-form input[type=color][readonly], .am-form select[disabled], .am-form select[readonly], .am-form textarea[disabled], .am-form textarea[readonly], .am-form-field[disabled], .am-form-field[readonly], fieldset[disabled] .am-form input[type=number], fieldset[disabled] .am-form input[type=search], fieldset[disabled] .am-form input[type=text], fieldset[disabled] .am-form input[type=password], fieldset[disabled] .am-form input[type=datetime], fieldset[disabled] .am-form input[type=datetime-local], fieldset[disabled] .am-form input[type=date], fieldset[disabled] .am-form input[type=month], fieldset[disabled] .am-form input[type=time], fieldset[disabled] .am-form input[type=week], fieldset[disabled] .am-form input[type=email], fieldset[disabled] .am-form input[type=url], fieldset[disabled] .am-form input[type=tel], fieldset[disabled] .am-form input[type=color], fieldset[disabled] .am-form select, fieldset[disabled] .am-form textarea, fieldset[disabled] .am-form-field {
+    cursor: not-allowed;
+    opacity:.45;
+        background-color:initial;
+}

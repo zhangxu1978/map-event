@@ -1,0 +1,290 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <!--<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE8">-->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <link rel="stylesheet" href="map/leaflet.css">
+    <link rel="stylesheet" href="map/leaflet.draw.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+    <link rel="stylesheet" href="amazeui/assets/css/amazeui.min.css" />
+    <link rel="stylesheet" href="amazeui/Styles/admin.css" />
+    <link rel="stylesheet" href="amazeui/Styles/app.css" />
+    <link rel="stylesheet" href="amazeui/assets/css/amazeui.datatables.css">
+    <link rel="stylesheet" href="amazeui/Styles/main.css" />
+    <link rel="stylesheet" href="amazeui/ztree/css/zTreeStyle/zTreeStyle.css" type="text/css">
+    <link href="amazeui/Styles/newmy.css" rel="stylesheet" type="text/css" />
+    <script src="map/jquery-3.7.0.min.js"></script>
+    <script src="amazeui/assets/js/amazeui.min.js" type="text/javascript"></script>
+    <script src="amazeui/assets/js/amazeui.datatables.js" type="text/javascript"></script>
+    <script src="amazeui/assets/js/dataTables.responsive.min.js" type="text/javascript"></script>
+    <script src="amazeui/assets/js/amazeui.widgets.helper.min.js" type="text/javascript"></script>
+    <script src="amazeui/Scripts/main.js" type="text/javascript"></script>
+    <script type="text/javascript" src="amazeui/Scripts/jquery.rotate.min.js"></script>
+    <script src="amazeui/assets/js/handlebars.min.js" type="text/javascript"></script>
+    <script src="amazeui/Scripts/layer/layer.js" type="text/javascript"></script>
+    <script type="text/javascript" src="amazeui/Scripts/laydate/laydate.js"></script>
+
+    <style>
+        .leaflet-map {
+            width: 100%;
+            height: 96vh;
+            border: 1px #409EFF solid;
+            border-radius: 5px;
+        }
+
+        /* 设置浮动按钮样式 */
+        .float-button {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 50px;
+            height: 50px;
+            background-color: #4CAF50;
+            color: white;
+            border-radius: 50%;
+            font-size: 16px;
+            text-align: center;
+            vertical-align: middle;
+            z-index: 999;
+        }
+
+            .float-button:hover .dropdown-menu {
+                display: block;
+            }
+
+        #operlist_div_menu {
+            display: none;
+            position: absolute;
+            top: 50px;
+            right: 50px;
+            cursor: pointer;
+            z-index: 99999999;
+        }
+
+        .menuli {
+            display: block;
+            padding: 6px 12px;
+            border-top: 1px solid #e8e8e8;
+            overflow: hidden;
+            word-wrap: normal;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            color: #333;
+            background-color: white;
+        }
+        a.disabled {
+            pointer-events: none;
+            cursor: default;
+            color: gray;
+        }
+        .thumbnail {
+            /* 设置图片的宽度和高度为50*50 */
+            width: 50px;
+            height: 50px;
+            /* 设置图片的边框和边距，根据需要调整 */
+            border: 1px solid black;
+            margin: 5px;
+        }
+
+    </style>
+
+    <script src="map/leaflet.js"></script>
+    <script src="map/leaflet.draw.js"></script>
+    <script src="map/leaflet.motion.min.js"></script>
+    <script src="map/Leaflet.Marker.SlideTo.js"></script>
+    <script src="map/L.Polyline.SnakeAnim.js"></script>
+    <script src="map/util.js"></script>
+    <script src="map/map.js"></script>
+    <script>
+
+
+
+    </script>
+</head>
+
+
+<body>
+    <!--弹出菜单div-->
+
+    <div id="operlist_div" class="clearfix">
+        <button class="float-button" onclick="ToggleDropdown()">
+            <i class="fas fa-cog"></i>
+        </button>
+
+        <menu id="operlist_div_menu" class="class='u-menu u-menu-min z-show'" style="display:none">
+
+            <li><a class="menuli" onclick="gaibianHuanjing()">当前环境</a></li>
+            <li><a class="menuli" onclick="playAnimation()">播放事件</a></li>
+
+
+            <li><a class="menuli edit disabled" disabled onclick="newEvent()">新增事件</a></li>
+            <li><a class="menuli edit disabled" disabled onclick="addPath()">添加路径</a></li>
+            <li><a class="menuli edit disabled" disabled onclick="editPath()">修改路径</a></li>
+            <li><a class="menuli edit disabled" disabled onclick="addPiont()">放置标记</a></li>
+            <li><a  style="display: none;" class="menuli edit disabled" disabled onclick="upload()">上传事件</a></li>
+            <li><a  style="display: none;" class="menuli" id="dengluzhuangtai" onclick="denglu()">登录状态</a></li>
+        </menu>
+    </div>
+    <!--新增事件div-->
+    <div id="addEven" style="display: none;" class="popup">
+
+        <div class="am-form-group" style="padding-top:20px;">
+            <input autocomplete="off" type="text" style="display: none;"
+                   value="e90c1b3d6cbd4168b42fc9ae7b791b2a" id="personId">
+
+            <label class="am-u-lg-3 am-form-label">名称：</label>
+            <div class="am-u-lg-9">
+                <input autocomplete="off" type="text" class="am-form-field" maxlength="100" required="required" placeholder="请输入事件名称"
+                       value="" id="evenName">
+            </div>
+            <label class="am-u-lg-3 am-form-label">开始时间：</label>
+            <div class="am-u-lg-9">
+                <input autocomplete="off" type="text" class="am-form-field" maxlength="100" required="required" placeholder="开始时间"
+                       value="" id="stime">
+            </div>
+            <label class="am-u-lg-3 am-form-label">结束时间</label>
+            <div class="am-u-lg-9">
+                <input autocomplete="off" type="text" class="am-form-field" maxlength="100" required="required" placeholder="结束时间"
+                       value="" id="etime">
+            </div>
+        </div>
+    </div>
+    <!--放置标记div-->
+    <div id="addPiont" style="display: none;" class="popup">
+        <div class="am-form-group" style="padding-top:20px;">
+            <label class="am-u-lg-3 am-form-label">经纬度：</label>
+            <div class="am-u-lg-9">
+                <input autocomplete="off" type="text" maxlength="100" required="required" placeholder=""
+                       value="" id="xy"><button type="button" onclick="changeXY()" class="am-btn am-btn-default">经纬度互换</button>
+            </div>
+            <label class="am-u-lg-3 am-form-label">地点：</label>
+            <div class="am-u-lg-9">
+                <input autocomplete="off" type="text" maxlength="100" required="required" placeholder="北京"
+                       value="" id="findxy"><button type="button" onclick="getLocation()" class="am-btn am-btn-default">查找</button>
+            </div>
+
+        </div>
+    </div>
+    <!--保存路径div-->
+    <div id="savePath" style="display: none;" class="popup">
+        <form class="am-form am-form-horizontal" id="savePathFrom"
+              method="post">
+            <div class="am-form-group" style="padding-top:20px;">
+                <div id="pathListDiv" style="display:none">
+
+                    <label class="am-u-lg-3 am-form-label">选择路径</label>
+
+                    <div class="am-u-lg-6">
+                        <select data-am-selected id="pathList" onchange="selectTime()">
+                        </select>
+
+                    </div>
+                    <div class="am-u-lg-3">
+                        <button class="am-btn am-btn-primary" onclick="deletePath()">删除</button>
+                    </div>
+                </div>
+                <label class="am-u-lg-3 am-form-label">地图级别：</label>
+                <div class="am-u-lg-9">
+                    <input autocomplete="off" type="number" maxlength="100" required="required"
+                           value="" id="mapLevelForedit">
+                </div>
+                <label class="am-u-lg-3 am-form-label">时间：</label>
+                <div class="am-u-lg-9">
+                    <input autocomplete="off" type="number" maxlength="20" required="required"
+                           value="" id="yearmonth">
+                </div>
+                <label class="am-u-lg-3 am-form-label">图标：</label>
+                <div class="am-u-lg-9">
+                    <div class="am-input-group">
+                        <span class="am-input-group-label"><i class="am-icon-search" onclick="selectIco()"></i></span>
+                        <input type="text" class="am-form-field" readonly id="imgId">
+                    </div>
+
+                </div>
+                <label class="am-u-lg-3 am-form-label">说明：</label>
+                <div class="am-u-lg-9">
+                    <textarea class="" rows="5" id="chname"></textarea>
+                </div>
+
+            </div>
+        </form>
+    </div>
+    <!--弹出环境设置菜单div-->
+    <div id="changeHuanjing" style="display: none;" class="popup">
+        <div class="am-form am-form-horizontal" id="updateLevelFrom">
+            <div class="am-form-group" style="padding-top:20px;">
+                <label class="am-u-lg-3 am-form-label">地图：</label>
+                <div class="am-u-lg-9">
+                    <select autofocus class="select" id="selectMap" required>
+                        <option value="-1">高德地形</option>
+                        <option value="0">高德道路</option>
+                        <option value="1">OSM 路网</option>
+                        <option value="2">OSM 标准</option>
+                        <option value="3">ESIR 卫星</option>
+                        <option value="4">ESIR 道路</option>
+                        <option value="7">ESIR 山影</option>
+                        <option value="5">谷歌卫星</option>
+                        <option value="6">谷歌道路</option>
+                    </select>
+                </div>
+                <label class="am-u-lg-3 am-form-label">地图级别：</label>
+                <div class="am-u-lg-9">
+                    <input autocomplete="off" readonly="readonly" type="text" name="conName" maxlength="100" required="required"
+                           value="" id="mapLevel">
+                </div>
+                <label class="am-u-lg-3 am-form-label">禁止编辑：</label>
+                <div class="am-u-lg-9">
+                    <select autofocus class="select" id="noEdit" required>
+                        <option value="1" selected="selected">是</option>
+                        <option value="0">否</option>
+                    </select>
+                </div>
+                <label class="am-u-lg-3 am-form-label">底部文本：</label>
+                <div class="am-u-lg-9">
+                    <select autofocus class="select" id="bottomText" required>
+                        <option value="1" selected>显示</option>
+                        <option value="0">不显示</option>
+                    </select>
+                </div>
+                <label class="am-u-lg-3 am-form-label">当前事件：</label>
+                <div class="am-u-lg-9">
+                    <select autofocus class="select" id="nowAction" required>
+                        <option value="0" seleced="true">李白生平</option>
+
+                    </select>
+                </div>
+                <label class="am-u-lg-3 am-form-label">处理当前事件:</label>
+                <button style="" class="am-u-lg-3 am-btn am-btn-primary am-btn-sm am-margin-top importLimitssave">
+                    保存事件<span class="am-icon-save"></span>
+                </button>
+                <label class="am-u-lg-1 am-form-label"></label>
+                <button style="" class="am-u-lg-3 am-btn am-btn-primary am-btn-sm am-margin-top importLimits">
+                    载入事件<span class="am-icon-send"></span>
+                </button>
+                <input type="file" style="display: none"  accept=".json" id="importLimits" />
+            </div>
+        </div>
+    </div>
+
+    <div class="leaflet-map" id="map"></div>
+
+    <div id="layerImg" style="display: none;" class="popup">
+        <img src="consys/game/game_person/8071b54dd5794e8b81dbe337a60153ba.png" alt="8071b54dd5794e8b81dbe337a60153ba" onclick="setIco('8071b54dd5794e8b81dbe337a60153ba')" class="thumbnail">
+        <img src="consys/game/game_person/479dd215a4b24838b67672005016a8cf.png" alt="479dd215a4b24838b67672005016a8cf" onclick="setIco('479dd215a4b24838b67672005016a8cf')" class="thumbnail">
+        <img src="consys/game/game_person/7d142bd2d5c5431285a44c9d8effa182.png" alt="7d142bd2d5c5431285a44c9d8effa182" onclick="setIco('7d142bd2d5c5431285a44c9d8effa182')" class="thumbnail">
+        <img src="consys/game/game_person/c435a905d5f94dcc8f5f3407b8666115.png" alt="c435a905d5f94dcc8f5f3407b8666115" onclick="setIco('c435a905d5f94dcc8f5f3407b8666115')" class="thumbnail">
+        <img src="consys/game/game_person/20cb8b5b137540dc9d428271b8f89d0e.png" alt="20cb8b5b137540dc9d428271b8f89d0e" onclick="setIco('20cb8b5b137540dc9d428271b8f89d0e')" class="thumbnail">
+        <img src="consys/game/game_person/88b95fd85ca74ab181c0c06d31640106.png" alt="88b95fd85ca74ab181c0c06d31640106" onclick="setIco('88b95fd85ca74ab181c0c06d31640106')" class="thumbnail">
+        <img src="consys/game/game_person/b40d704873b44e668c0ff0e006f97258.png" alt="b40d704873b44e668c0ff0e006f97258" onclick="setIco('b40d704873b44e668c0ff0e006f97258')" class="thumbnail">
+        <img src="consys/game/game_person/a9eeff8dd13d468bba765a2cf5936328.png" alt="a9eeff8dd13d468bba765a2cf5936328" onclick="setIco('a9eeff8dd13d468bba765a2cf5936328')" class="thumbnail">
+        <img src="consys/game/game_person/db02cb5cc5494c6cb4770e66b024fb2a.png" alt="db02cb5cc5494c6cb4770e66b024fb2a" onclick="setIco('db02cb5cc5494c6cb4770e66b024fb2a')" class="thumbnail">
+        <img src="consys/game/game_person/4c14023776f047d4a254552d95835c51.png" alt="4c14023776f047d4a254552d95835c51" onclick="setIco('4c14023776f047d4a254552d95835c51')" class="thumbnail">
+    </div>
+    <div id="circular" style="display:none" class="circular">
+        <i class="am-icon-spinner fa-pulse fa-5x"></i>
+    </div>
+</body>
+
+
+</html>

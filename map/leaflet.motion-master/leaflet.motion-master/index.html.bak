@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    	<title>Leaflet motion plugin</title>
+    	<meta charset="utf-8" />
+
+    	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+		<link rel="stylesheet" href="https://leaflet.github.io/Leaflet.draw/src/leaflet.draw.css"/>
+		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"/>
+
+        <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/1.0.2/leaflet.draw.js"></script>
+
+		<!--script src="src/leaflet.motion.js"></script>
+		<script src="src/leaflet.motion.utils.js"></script>
+		<script src="src/leaflet.motion.easing.js"></script>
+		<script src="src/layer/leaflet.motion.polyline.js"></script>
+		<script src="src/layer/leaflet.motion.polygon.js"></script>
+		<script src="src/layer/leaflet.motion.group.js"></script>
+		<script src="src/layer/leaflet.motion.seq.js"></script-->
+		<script src="dist/leaflet.motion.min.js"></script>
+        <style>
+            // 创建一个地图对象
+var map = L.map('map').setView([0, 0], 2);
+
+// 添加一个瓦片图层
+L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+  attribution: '© <a href="^3^">OpenStreetMap</a> contributors'
+}).addTo(map);
+
+// 定义一个坐标数组，表示旅行的起点和终点
+var latlngs = [
+  [48.8583736, 2.2922926], // 巴黎
+  [40.7127837, -74.0059413], // 纽约
+  [35.6894875, 139.6917064], // 东京
+  [-33.8674869, 151.2069902] // 悉尼
+];
+
+// 创建一个折线对象，使用坐标数组和选项
+var polyline = L.motion.polyline(latlngs, {
+  color: 'red'
+}, {
+  auto: true, // 自动开始动画
+  duration: 5000, // 动画持续时间为5秒
+  easing: L.Motion.Ease.linear // 动画策略为线性
+}, {
+  removeOnEnd: true, // 动画结束后移除标记
+  showMarker: true, // 动画开始时显示标记
+  icon: L.divIcon({html: "<i class='fa fa-car fa-2x' aria-hidden='true'></i>", iconSize: L.point(27.5, 24)}) // 使用自定义图标
+}).addTo(map);
+
+// 获取折线上的marker对象
+var marker = polyline.getMarker();
+
+// 创建一个popup对象，设置内容和选项
+var popup = L.popup({
+  maxWidth: 200, // 最大宽度为200像素
+  closeButton: false // 不显示关闭按钮
+}).setContent("我是一个移动的popup");
+
+// 给marker绑定popup对象
+marker.bindPopup(popup);
+
+// 给marker添加一个事件监听器，当marker移动到某个坐标时，自动打开popup
+marker.on('motionchange', function(e) {
+  // 获取当前坐标的索引值
+  var index = e.index;
+  
+  // 判断是否是第二个或第三个坐标（纽约或东京）
+  if (index === 1 || index === 2) {
+    // 打开popup
+    marker.openPopup();
+    
+    // 设置一个定时器，在3秒后关闭popup
+    setTimeout(function() {
+      marker.closePopup();
+    }, 3000);
+    
+    // 如果是第二个坐标（纽约），修改popup的内容为“我到达了纽约”
+    if (index === 1) {
+      popup.setContent("我到达了纽约");
+    }
+    
+    // 如果是第三个坐标（东京），修改popup的内容为“我到达了东京”
+    if (index === 2) {
+      popup.setContent("我到达了东京");
+    }
+    
+  }
+  
+  // 获取当前坐标的经纬度值
+  var latlng = e.latlng;
+  
+  // 调用map的panTo方法，让地图平滑地移动到当前坐标为中心点
+  map.panTo(latlng);
+});
+
+
+    	</script>
+    </body>
+
+</html>

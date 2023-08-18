@@ -1,0 +1,29 @@
+﻿.divpath  {font-family: arial, sans-serif; width:749px; height:30px; position:relative; margin:0; font-size:11px; margin:50px 0; background:#fff; position:relative;}
+/*.divpath { width:150px; }*/
+.divpath table { width:100%; border-collapse:collapse;}
+.divpath a { text-decoration:none; color:#333;}
+.divpath a:hover { color:#f60;}
+.divpath ul ul { position:absolute; visibility:hidden; right:-150px; top:-1px;}
+.divpath li { border-bottom:1px solid #ccc; position:relative; _position:static; float:left; width:100%;}
+.divpath a.li { position:relative;}
+.divpath li .option { display:block; line-height:15px; padding:5px 5px 5px 25px; background:no-repeat 5px 4px; cursor:pointer; font:12px Verdana; zoom:1; background:url(img/ico.gif) no-repeat;}
+.divpath li .option:hover { color:#f60; background-color:#ffa;}
+.divpath li .option span { display:block; padding-right:15px; background:url(img/ico.gif) no-repeat right 0;}
+.divpath li .option:hover span { background-position:right -15px;}
+.divpath .li:hover { z-index:2; background:transparent;}
+.divpath .li:hover ul { visibility:visible;}
+.divpath .li:hover ul ul { visibility:hidden;}
+.divpath .li:hover ul { border:1px solid #ccc; border-width:1px 2px 2px 1px; width:150px; background:#fff; padding:1px;}
+.divpath .li:hover li { border-bottom:none;}
+.divpath .li:hover li .option { padding:2px 5px; background:transparent;}
+.divpath .li:hover li .option:hover { background:#0096ff; color:#fff;}
+.divpath .li:hover li .option:hover span { background-position:right -30px;}
+.divpath .li:hover .li:hover ul { visibility:visible; left:145px; top:-2px;}
+/*---图标差异---*/
+.divpath .charges .option { background-position:4px -45px;}
+.divpath .biz .option { background-position:4px -70px;}
+.divpath .change .option { background-position:4px -95px;}
+.divpath .score .option { background-position:4px -120px;}
+.divpath .server .option { background-position:4px -145px;}
+.divpath .edit .option { background-position:4px -170px;}
+.divpath .sms .option { background-position:4px -195px;}

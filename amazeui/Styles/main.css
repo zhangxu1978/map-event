@@ -1,0 +1,55 @@
+#vld-tooltip {position: absolute;z-index: 1000;padding: 5px 10px;background: #F37B1D;min-width: 150px;
+	color: #fff;transition: all 0.15s;box-shadow: 0 0 5px rgba(0, 0, 0, .15);display: none;
+}
+
+#vld-tooltip:before {
+	position: absolute;top: -8px;left: 50%;width: 0;height: 0;margin-left: -8px;content: "";border-width: 0 8px 8px;
+	border-color: transparent transparent #F37B1D;border-style: none inset solid;
+}
+.list_none{width:100%!important;padding:10px!important;}
+.list_none li{list-style:none; height:30px;line-height:30px;font-size: 14px;}
+.name {float: left;width: 33%;text-align: center;}
+.time {float: left;width: 33%;text-align: center;}
+.btn {float: right;width: 33%;text-align: center;}
+.btn span {display: inline-block;line-height: 30px;}
+.btn span:nth-of-type(1) {margin-right: 10px;}
+
+/*amaze ui 定义
+.admin-content-body{padding-left: 5px;padding-right: 5px;}*/
+.am-form-group{margin-bottom:1rem!important;}
+/*.am-table {border-collapse: collapse!important;}*/
+.am-table>tbody>tr>td, .am-table>tbody>tr>th, .am-table>tfoot>tr>td, .am-table>tfoot>tr>th, .am-table>thead>tr>td, .am-table>thead>tr>th {padding: 5px!important;vertical-align:middle!important;}
+/*公共样式*/
+/*网格行选中背景图 e6e6e6 333*/
+.row-active{background-color:#e6e6e6;color:#333;}
+
+
+/*各模块样式*/
+/*首页*/
+.index_title {text-align: center;font-size: 18px;font-weight: bold;display: block;}
+
+
+ /*typeahead 样式*/
+ .tt-menu {
+  width: 220px;margin: 5px 0;padding: 8px;background-color: #fff;
+  border: 1px solid #ccc;border: 1px solid rgba(0, 0, 0, 0.2);
+  -webkit-border-radius: 2px;
+     -moz-border-radius: 2px;
+          border-radius: 2px;
+  -webkit-box-shadow: 0 5px 10px rgba(0,0,0,.2);
+     -moz-box-shadow: 0 5px 10px rgba(0,0,0,.2);
+          box-shadow: 0 5px 10px rgba(0,0,0,.2);
+   z-index:200!important;
+}
+.tt-suggestion {padding: 3px 20px;font-size: 18px;line-height: 24px;}
+.tt-suggestion:hover {cursor: pointer;color: #fff;background-color: #0097cf;}
+.tt-suggestion.tt-cursor {color: #fff;background-color: #0097cf;}
+.tt-suggestion p {margin: 0;}
+.gist {font-size: 13px;}
+[v-cloak] {
+    display: none;
+}
+/* 侧边滑出可的文字可选择 */
+.select-text-style div.am-tabs-bd {
+    user-select: auto !important;
+}

@@ -1,0 +1,103 @@
+function getCookie(c_name) {
+    if (document.cookie.length > 0) {
+        c_start = document.cookie.indexOf(c_name + "=")
+        if (c_start != -1) {
+            c_start = c_start + c_name.length + 1
+            c_end = document.cookie.indexOf(";", c_start)
+            if (c_end == -1) c_end = document.cookie.length
+            return unescape(document.cookie.substring(c_start, c_end))
+        }
+    }
+    return ""
+}
+
+// 自定义弹出框
+function openCustom(title, width, height, content, callback, cancelback, successCallback) {
+	var winheight = $(window).height() - 80;
+	if (height > winheight)
+		height = winheight;
+	var index = layer.open({
+		btn: ['提交', '取消'],
+		title: title,
+		type: 1,
+		scrollbar: false,
+		// skin : 'layui-layer-rim', // 加上边框
+		area: [width + 'px', height + 'px'], // 宽高
+		content: content,
+		yes: function (index, layero) { // 或者使用btn1
+			if (callback)
+				eval(callback);
+		},
+		cancel: function (index, layero) { // 或者使用btn2
+			if (cancelback) {
+				eval(cancelback);
+			}
+			layer.close(index);
+		}, success: function (layero, index) {
+			if (successCallback)
+				successCallback(index);
+		}
+	});
+
+	return index;
+}
+//正上方弹出消息
+function openAlertTopMsg(content) {
+	layer.msg(content, {
+		offset: 't',
+		anim: 1
+	});
+}
+
+function gaibianHuanjing() {
+	let mapUrlindex = getCookie("mapUrlindex");
+	if (mapUrlindex)
+		$("#selectMap").val(mapUrlindex)
+	else
+		$("#selectMap").val(-1)
+
+	openCustom("改变环境", "800", "700", $("#changeHuanjing"), 'changeHuanjing()');
+}
+function changeHuanjing() {
+	let mapUrl = "";
+	let mapUrlindex = $("#selectMap").val();
+	if (mapUrlindex == -1) {
+		mapUrl = "http://wprd04.is.autonavi.com/appmaptile?lang=zh_cn&size=1&style=6&x={x}&y={y}&z={z}";
+	} else if (mapUrlindex == 0) {
+		mapUrl = "http://wprd04.is.autonavi.com/appmaptile?lang=zh_cn&size=1&style=7&x={x}&y={y}&z={z}";
+	}
+	else if (mapUrlindex == 1) {
+		mapUrl = "https://a.tile.thunderforest.com/transport/{z}/{x}/{y}.png?apikey=6170aad10dfd42a38d4d8c709a536f38";
+	}
+	else if (mapUrlindex == 2) {
+		mapUrl = "https://tile.openstreetmap.org/{z}/{x}/{y}.png?apikey=6170aad10dfd42a38d4d8c709a536f38";
+	}
+	else if (mapUrlindex == 3) {
+		mapUrl = "https://services.arcgisonline.com/arcgis/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}";
+	}
+	else if (mapUrlindex == 4) {
+		mapUrl = "https://map.geoq.cn/arcgis/rest/services/ChinaOnlineCommunity/MapServer/tile/{z}/{y}/{x}";
+	}
+	L.removeLayer(basemapUrl);
+	L.tileLayer(mapUrl, {
+		maxZoom: 18,
+		tileSize: 256,
+
+	}).addTo(map);
+}
+
+$(function () {
+	//绑定div的id（即地图在哪个div中展示），设置地图默认中心点和缩放级别，
+	var map = L.map('map', {
+		zoomControl: false,
+		attributionControl: false
+	}).setView([34.75868, 113.66077], 16);
+	/* 加载高德地图瓦片 */
+	var basemapUrl = "http://wprd04.is.autonavi.com/appmaptile?lang=zh_cn&size=1&style=6&x={x}&y={y}&z={z}";
+	L.tileLayer(basemapUrl, {
+		maxZoom: 18,
+		tileSize: 256,
+
+	}).addTo(map);
+
+})
